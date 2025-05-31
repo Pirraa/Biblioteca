@@ -1,47 +1,47 @@
-
 <?php
-require_once("strumenti/connect.php"); // Connessione al DB
-include("strumenti/navbar.php");       // Navbar
+require_once("strumenti/connect.php");
+include("strumenti/navbar.php");
 
-$anno = "";
-$totale_libri = null;
+$data_inizio = "";
+$data_fine = "";
+$result = null;
+$error = "";
 
-// Primo blocco: conteggio libri per anno scelto dall'utente
-if (isset($_GET['anno']) && is_numeric($_GET['anno'])) {
-    $anno = mysqli_real_escape_string($link, $_GET['anno']);
-    $queryAnno = "SELECT COUNT(*) AS totale_libri FROM Libro WHERE anno_pubblicazione = $anno";
-    $resultAnno = mysqli_query($link, $queryAnno);
+// Gestione form
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['data_inizio'], $_GET['data_fine'])) {
+    $data_inizio = mysqli_real_escape_string($link, $_GET['data_inizio']);
+    $data_fine = mysqli_real_escape_string($link, $_GET['data_fine']);
 
-    if ($resultAnno && mysqli_num_rows($resultAnno) > 0) {
-        $row = mysqli_fetch_assoc($resultAnno);
-        $totale_libri = $row['totale_libri'];
+    if (!empty($data_inizio) && !empty($data_fine)) {
+        $query = "
+            SELECT succursale, COUNT(*) AS numero_prestiti
+            FROM Prestito
+            WHERE data_uscita BETWEEN '$data_inizio' AND '$data_fine'
+            GROUP BY succursale
+        ";
+        $result = mysqli_query($link, $query);
+
+        if (!$result) {
+            $error = "Errore durante l'esecuzione della query: " . mysqli_error($link);
+        }
+    } else {
+        $error = "Inserire entrambe le date.";
     }
 }
-
-// Secondo blocco: conteggio libri per autore
-$queryAutori = "
-    SELECT A.nome, A.cognome, COUNT(*) AS numero_libri
-    FROM Autore A
-    JOIN AutoreLibro AL ON A.id_autore = AL.id_autore
-    GROUP BY A.id_autore
-";
-$resultAutori = mysqli_query($link, $queryAutori);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Statistiche Libri</title>
+    <title>Statistiche Prestiti per Succursale</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        input[type="number"] {
+        form input {
+            margin: 10px 5px;
             padding: 8px;
-            margin-bottom: 10px;
-            width: 120px;
         }
         button {
             padding: 8px 16px;
-            margin-right: 10px;
             background-color: #007bff;
             color: white;
             border: none;
@@ -50,19 +50,10 @@ $resultAutori = mysqli_query($link, $queryAutori);
         button:hover {
             background-color: #0056b3;
         }
-        .secondary-button {
-            background-color: #6c757d;
-        }
-        .secondary-button:hover {
-            background-color: #5a6268;
-        }
-        h3 {
-            margin-top: 40px;
-        }
         table {
             border-collapse: collapse;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         th, td {
             border: 1px solid #aaa;
@@ -72,54 +63,45 @@ $resultAutori = mysqli_query($link, $queryAutori);
         th {
             background-color: #ddd;
         }
+        .error { color: red; }
     </style>
 </head>
 <body>
 
-<h2>Statistiche sulla Biblioteca</h2>
+<h2>Statistiche Prestiti per Succursale</h2>
 
-<!-- 🔘 Bottone per andare a statistiche_succursale.php -->
-<a href="statistiche_succursale.php">
-    <button class="secondary-button">Statistiche per Succursale</button>
-</a>
+<form method="GET" action="">
+    <label>Data Inizio:</label>
+    <input type="date" name="data_inizio" value="<?php echo htmlspecialchars($data_inizio); ?>" required>
 
-<!-- Form per selezionare un anno -->
-<form method="GET" action="" style="margin-top: 20px;">
-    <label for="anno">Inserisci un anno di pubblicazione:</label>
-    <input type="number" name="anno" id="anno" value="<?php echo htmlspecialchars($anno); ?>" required>
-    <button type="submit">Cerca</button>
+    <label>Data Fine:</label>
+    <input type="date" name="data_fine" value="<?php echo htmlspecialchars($data_fine); ?>" required>
+
+    <button type="submit">Visualizza</button>
 </form>
 
-<!-- Tabella 1: Conteggio libri per anno -->
 <?php
-if ($anno !== "") {
-    echo "<h3>Numero di libri pubblicati nel $anno</h3>";
-    echo "<table>";
-    echo "<tr><th>Anno</th><th>Totale Libri</th></tr>";
-    echo "<tr><td>$anno</td><td>" . ($totale_libri ?? 0) . "</td></tr>";
-    echo "</table>";
+if (!empty($error)) {
+    echo "<p class='error'>$error</p>";
 }
-?>
 
-<!-- Tabella 2: Conteggio libri per autore -->
-<h3>Numero di libri per Autore</h3>
-<?php
-if ($resultAutori && mysqli_num_rows($resultAutori) > 0) {
+if ($result && mysqli_num_rows($result) > 0) {
+    echo "<h3>Risultati</h3>";
     echo "<table>";
-    echo "<tr><th>Nome</th><th>Cognome</th><th>Numero di Libri</th></tr>";
-    while ($row = mysqli_fetch_assoc($resultAutori)) {
+    echo "<tr><th>Succursale</th><th>Numero Prestiti</th></tr>";
+
+    while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row["nome"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["cognome"]) . "</td>";
-        echo "<td>" . $row["numero_libri"] . "</td>";
+        echo "<td>" . htmlspecialchars($row["succursale"]) . "</td>";
+        echo "<td>" . $row["numero_prestiti"] . "</td>";
         echo "</tr>";
     }
+
     echo "</table>";
-} else {
-    echo "<p>Nessun autore trovato.</p>";
+} elseif ($result && mysqli_num_rows($result) === 0) {
+    echo "<p>Nessun prestito trovato per l'intervallo selezionato.</p>";
 }
 ?>
 
 </body>
 </html>
-
