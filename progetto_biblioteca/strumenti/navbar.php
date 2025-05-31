@@ -21,4 +21,5 @@
     <a href="prestiti.php"> Prestiti </a>
     <a href="libri.php"> Libri </a>
     <a href="statistiche.php"> Statistiche </a>
+    <a href='autori.php'> Autori </a>
 </div>

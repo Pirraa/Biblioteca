@@ -32,13 +32,13 @@ if (!$result) {
         }
         button {
             padding: 8px 16px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #28a745;
         }
         table {
             border-collapse: collapse;
@@ -53,6 +53,21 @@ if (!$result) {
         th {
             background-color: #ddd;
         }
+         .exit-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        .exit-btn:hover {
+            background-color: #b02a37;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +77,7 @@ if (!$result) {
 <form method="GET" action="">
     <input type="text" name="titolo" placeholder="Inserisci titolo (anche parziale)" value="<?php echo htmlspecialchars($titolo); ?>">
     <button type="submit">Cerca</button>
-    <a href="cerca_libro.php"><button type="button" style="background-color:#6c757d;">Reset</button></a>
+    <button type="button" class="exit-btn" onclick="window.location.href='prestiti.php'">Esci</button>
 </form>
 
 <?php
@@ -80,7 +95,7 @@ if (mysqli_num_rows($result) > 0) {
     }
     echo "</table>";
 } else {
-    echo "<p>Nessun libro trovato.</p>";
+    echo "<p class='message'>Nessun libro trovato.</p>";
 }
 ?>
 

@@ -50,12 +50,6 @@ $resultAutori = mysqli_query($link, $queryAutori);
         button:hover {
             background-color: #0056b3;
         }
-        .secondary-button {
-            background-color: #6c757d;
-        }
-        .secondary-button:hover {
-            background-color: #5a6268;
-        }
         h3 {
             margin-top: 40px;
         }
@@ -72,15 +66,23 @@ $resultAutori = mysqli_query($link, $queryAutori);
         th {
             background-color: #ddd;
         }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
+        }
     </style>
 </head>
 <body>
 
 <h2>Statistiche sulla Biblioteca</h2>
 
-<!-- 🔘 Bottone per andare a statistiche_succursale.php -->
+<!--Bottone per andare a statistiche_succursale.php -->
 <a href="statistiche_succursale.php">
-    <button class="secondary-button">Statistiche per Succursale</button>
+    <button class="button">Statistiche per Succursale</button>
 </a>
 
 <!-- Form per selezionare un anno -->
@@ -96,7 +98,11 @@ if ($anno !== "") {
     echo "<h3>Numero di libri pubblicati nel $anno</h3>";
     echo "<table>";
     echo "<tr><th>Anno</th><th>Totale Libri</th></tr>";
-    echo "<tr><td>$anno</td><td>" . ($totale_libri ?? 0) . "</td></tr>";
+    if ($totale_libri !== null) {
+        echo "<tr><td>$anno</td><td>$totale_libri</td></tr>";
+    } else {
+        echo "<tr><td>$anno</td><td>0</td></tr>";
+    }
     echo "</table>";
 }
 ?>
@@ -116,7 +122,7 @@ if ($resultAutori && mysqli_num_rows($resultAutori) > 0) {
     }
     echo "</table>";
 } else {
-    echo "<p>Nessun autore trovato.</p>";
+    echo "<p class='message'>Nessun autore trovato.</p>";
 }
 ?>
 

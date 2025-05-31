@@ -24,13 +24,26 @@ include("strumenti/navbar.php");         // Navbar
             background-color: #ddd;
         }
         button {
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
+            padding: 10px 15px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
+        }
+        a{
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
         }
     </style>
 </head>
@@ -70,7 +83,7 @@ if (mysqli_num_rows($result) > 0) {
 
     echo "</table>";
 } else {
-    echo "<p>Nessun utente trovato.</p>";
+    echo "<p class='message'>Nessun utente trovato.</p>";
 }
 ?>
 
