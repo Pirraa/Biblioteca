@@ -3,6 +3,7 @@ require_once("strumenti/connect.php"); // Connessione al DB
 include("strumenti/navbar.php");         // Navbar
 ?>
 
+
 <!DOCTYPE html>
 <html>
 <head>
