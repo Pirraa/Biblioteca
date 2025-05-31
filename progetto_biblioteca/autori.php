@@ -1,12 +1,12 @@
 <?php
 require_once("strumenti/connect.php"); // Connessione al DB
-include("strumenti/navbar.php");       // Navbar
+include("strumenti/navbar.php");         // Navbar
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Elenco Libri</title>
+    <title>Elenco Autori</title>
     <style>
         body { font-family: Arial; padding: 20px; }
         table {
@@ -48,44 +48,40 @@ include("strumenti/navbar.php");       // Navbar
 </head>
 <body>
 
-<h2>Elenco dei Libri in Biblioteca</h2>
+<h2>Elenco degli Autori</h2>
 
-<a href="nuovo_libro.php">
-    <button>Aggiungi Nuovo Libro</button>
+<a href="cerca_autori.php">
+    <button>Ricerca</button>
 </a>
 
-<a href="cerca_libro.php">
-    <button>Ricerca Libro</button>
-</a>
-
-<a href="libri_autore.php">
-    <button>Ricerca Libro Autore</button>
+<a href="inserisci_autore.php">
+    <button>Inserisci Nuovo Autore</button>
 </a>
 
 <?php
-// Query per ottenere tutti i libri
-$query = "SELECT titolo, ISBN, anno_pubblicazione, succursale, lingua FROM Biblioteca.Libro";
+// Query per ottenere tutti gli autori
+$query = "SELECT id_autore, nome, cognome, data_nascita, luogo_nascita FROM Biblioteca.Autore";
 
 $result = mysqli_query($link, $query);
 
 // Verifica se ci sono risultati
 if (mysqli_num_rows($result) > 0) {
     echo "<table>";
-    echo "<tr><th>Titolo</th><th>ISBN</th><th>Anno Pubblicazione</th><th>Succursale</th><th>Lingua</th></tr>";
+    echo "<tr><th>ID Autore</th><th>Nome</th><th>Cognome</th><th>Data di Nascita</th><th>Luogo di Nascita</th></tr>";
 
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row["titolo"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["ISBN"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["anno_pubblicazione"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["succursale"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["lingua"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["id_autore"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["nome"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["cognome"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["data_nascita"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["luogo_nascita"]) . "</td>";
         echo "</tr>";
     }
 
     echo "</table>";
 } else {
-    echo "<p class='message'>Nessun libro trovato.</p>";
+    echo "<p class='message'>Nessun autore trovato.</p>";
 }
 ?>
 

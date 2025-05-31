@@ -6,8 +6,8 @@ $message = "";
 $results = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cerca_prestiti'])) {
-    $data_inizio = !empty($_POST['data_inizio']) ? mysqli_real_escape_string($link, $_POST['data_inizio']) : null;
-    $data_fine = !empty($_POST['data_fine']) ? mysqli_real_escape_string($link, $_POST['data_fine']) : null;
+    $data_inizio = $_POST['data_inizio'];
+    $data_fine = $_POST['data_fine'];
 
     if ($data_inizio && $data_fine) {
         // Query con intervallo date su data_uscita
@@ -48,25 +48,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cerca_prestiti'])) {
     <title>Ricerca Prestiti</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        label { display: block; margin-top: 10px; }
-        input { padding: 5px; width: 200px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
         button {
-            margin-top: 20px;
             padding: 10px 15px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
         .exit-btn {
-            background-color: #6c757d;
+            background-color: #dc3545;
             margin-left: 10px;
         }
         .exit-btn:hover {
-            background-color: #5a6268;
+            background-color: #b02a37;
         }
         table {
             border-collapse: collapse;

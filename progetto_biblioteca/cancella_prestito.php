@@ -43,32 +43,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancella_prestito'])) 
     <title>Elimina Prestito</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        label { display: block; margin-top: 10px; }
-        input { padding: 5px; width: 300px; }
+        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
+        label { font-weight: bold; margin-top: 10px; }
         button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #dc3545;
+            background-color: #28a745;
             color: white;
             border: none;
+            padding: 10px 16px;
             cursor: pointer;
         }
         button:hover {
+            background-color: #28a745;
+        }
+        .exit-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+        .exit-btn:hover {
             background-color: #b02a37;
         }
         .message {
             margin-top: 15px;
             padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #fee;
-            width: 320px;
-        }
-        .exit-btn {
-            background-color: #28a745;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #218838;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
         }
     </style>
 </head>

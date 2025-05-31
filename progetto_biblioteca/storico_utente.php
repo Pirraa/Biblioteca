@@ -9,7 +9,25 @@ include("strumenti/navbar.php");         // Navbar
     <title>Storico Utente</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        form input { margin-right: 10px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .exit-btn {
+            background-color: #6c757d;
+            margin-left: 10px;
+        }
+        .exit-btn:hover {
+            background-color: #5a6268;
+        }
         table {
             border-collapse: collapse;
             width: 100%;
@@ -17,11 +35,19 @@ include("strumenti/navbar.php");         // Navbar
         }
         th, td {
             border: 1px solid #aaa;
-            padding: 10px;
+            padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #eee;
+            background-color: #ddd;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
         }
     </style>
 </head>
@@ -29,16 +55,17 @@ include("strumenti/navbar.php");         // Navbar
 
 <h2>Ricerca Storico Prestiti per Matricola</h2>
 
-<a href="index.php">
-    <button style="padding: 8px 16px; font-size: 14px; background-color: #dc3545; color: white; border: none; cursor: pointer;">
-        Esci
-    </button>
-</a>
+
 
 <form method="POST" action="">
     <label for="matricola">Matricola:</label>
     <input type="text" name="matricola" id="matricola" required>
     <button type="submit">Cerca</button>
+    <a href="index.php">
+    <button style="padding: 8px 16px; font-size: 14px; background-color: #dc3545; color: white; border: none; cursor: pointer;">
+        Esci
+    </button>
+</a>
 </form>
 
 <?php

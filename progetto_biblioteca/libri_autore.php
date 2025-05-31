@@ -37,33 +37,32 @@ if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
     <title>Libri per Autore</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        input[type="text"] {
-            padding: 8px;
-            width: 250px;
-            margin-bottom: 10px;
-        }
+        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
+        label { font-weight: bold; margin-top: 10px; }
         button {
-            padding: 8px 16px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
+            padding: 10px 16px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
+        .exit-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
         }
-        th, td {
-            border: 1px solid #aaa;
+        .exit-btn:hover {
+            background-color: #b02a37;
+        }
+        .message {
+            margin-top: 15px;
             padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
         }
     </style>
 </head>
@@ -79,7 +78,7 @@ if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
     <input type="text" name="cognome" placeholder="Es. Eco" value="<?php echo htmlspecialchars($cognome); ?>">
 
     <button type="submit">Cerca</button>
-    <a href="libri_autore.php"><button type="button" style="background-color:#6c757d;">Reset</button></a>
+    <a href="libri_autore.php"><button type="button" class="exit-btn">Reset</button></a>
 </form>
 
 <?php
@@ -96,7 +95,7 @@ if ($result !== null) {
         }
         echo "</table>";
     } else {
-        echo "<p>Nessun libro trovato per questo autore.</p>";
+        echo "<p class='message'>Nessun libro trovato per questo autore.</p>";
     }
 }
 ?>

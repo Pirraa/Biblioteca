@@ -36,34 +36,33 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['data_inizio'], $_GET['da
     <title>Statistiche Prestiti per Succursale</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        form input {
-            margin: 10px 5px;
-            padding: 8px;
-        }
+        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
+        label { font-weight: bold; margin-top: 10px; }
         button {
-            padding: 8px 16px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
+            padding: 10px 16px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #28a745;
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
+        .exit-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
         }
-        th, td {
-            border: 1px solid #aaa;
+        .exit-btn:hover {
+            background-color: #b02a37;
+        }
+        .message {
+            margin-top: 15px;
             padding: 10px;
-            text-align: left;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            width: fit-content;
         }
-        th {
-            background-color: #ddd;
-        }
-        .error { color: red; }
     </style>
 </head>
 <body>
@@ -99,7 +98,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
     echo "</table>";
 } elseif ($result && mysqli_num_rows($result) === 0) {
-    echo "<p>Nessun prestito trovato per l'intervallo selezionato.</p>";
+    echo "<p class='message'>Nessun prestito trovato per l'intervallo selezionato.</p>";
 }
 ?>
 
