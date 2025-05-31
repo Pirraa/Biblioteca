@@ -1,0 +1,6 @@
+controllo sull'aggiunta prestiti: controllo su primary key. Se sono uguali segnalalo
+Navbar metti autori punto 5
+Controllo su prestiti_per_data: controllo che se inserisco una data devo inserire anche l'altra
+Uniformare i bottoni, input text
+Inserire textbox che mostra tutte le succursali presenti nel db
+Mettere le pagine sulle apposite cartelle  
