@@ -2,6 +2,8 @@
 require_once("strumenti/connect.php"); // Connessione al DB
 include("strumenti/navbar.php");       // Navbar
 
+$errore = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Leggo i dati inviati dal form
     $nome = $_POST["nome"];
@@ -9,23 +11,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_nascita = $_POST["data_nascita"];
     $luogo_nascita = $_POST["luogo_nascita"];
 
-    // Creo la query SQL
-    $sql = "INSERT INTO Autore (nome, cognome, data_nascita, luogo_nascita)
-            VALUES ('$nome', '$cognome', '$data_nascita', '$luogo_nascita')";
+    // Controllo che la data sia minore di oggi
+    $oggi = date("Y-m-d");
+    if ($data_nascita >= $oggi) {
+        $errore = "La data di nascita deve essere precedente a quella di oggi.";
+    } else {
+        // Creo la query SQL
+        $sql = "INSERT INTO Autore (nome, cognome, data_nascita, luogo_nascita)
+                VALUES ('$nome', '$cognome', '$data_nascita', '$luogo_nascita')";
 
-    // Eseguo la query
-    $query = mysqli_query($link, $sql);
+        // Eseguo la query
+        $query = mysqli_query($link, $sql);
 
-    if (!$query) {
-        echo "Si è verificato un errore: " . mysqli_error($link);
+        if (!$query) {
+            echo "Si è verificato un errore: " . mysqli_error($link);
+            exit;
+        }
+
+        mysqli_close($link);
+
+        // Reindirizzamento alla pagina autori
+        header("Location: autori.php");
         exit;
     }
-
-    mysqli_close($link);
-
-    // Reindirizzamento alla pagina autori
-    header("Location: autori.php");
-    exit;
 }
 ?>
 
@@ -59,6 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <h2>Inserisci un Nuovo Autore</h2>
+
+<h2>Inserisci un Nuovo Autore</h2>
+
+<?php if (!empty($errore)): ?>
+    <div style="color: red; margin-bottom: 10px;">
+        <?php echo htmlspecialchars($errore); ?>
+    </div>
+<?php endif; ?>
 
 <form method="POST" action="">
     <label>Nome:</label>
