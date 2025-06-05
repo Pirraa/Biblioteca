@@ -4,6 +4,18 @@ include("strumenti/navbar.php");      // Navbar
 
 $message = "";
 
+    $succursali = [];
+    $result_succursali = mysqli_query($link, "SELECT nome FROM Biblioteca.Succursale ORDER BY nome");
+    if ($result_succursali) {
+        while ($row = mysqli_fetch_assoc($result_succursali)) {
+            $succursali[] = $row['nome'];
+        }
+        mysqli_free_result($result_succursali);
+    } else {
+        echo "Errore nel recupero delle succursali: " . mysqli_error($link);
+        exit;
+    }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancella_prestito'])) {
     // Prendi i dati dal form
     $id_libro = mysqli_real_escape_string($link, $_POST['id_libro']);
@@ -85,10 +97,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancella_prestito'])) 
     <input type="number" id="id_libro" name="id_libro" required min="1">
 
     <label for="matricola">Matricola Utente (obbligatorio):</label>
-    <input type="text" id="matricola" name="matricola" required maxlength="6">
+    <input type="number" id="matricola" name="matricola" required maxlength="6">
 
-    <label for="succursale">Succursale (obbligatorio):</label>
-    <input type="text" id="succursale" name="succursale" required maxlength="100">
+    <label>Succursale:</label>
+    <select name="succursale" required>
+        <?php foreach ($succursali as $succursale): ?>
+            <option value="<?php echo htmlspecialchars($succursale); ?>">
+                <?php echo htmlspecialchars($succursale); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 
     <label for="data_uscita">Data Uscita (obbligatoria):</label>
     <input type="date" id="data_uscita" name="data_uscita" required>
