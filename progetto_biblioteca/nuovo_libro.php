@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <form method="POST" action="">
     <label>ISBN:</label>
-    <input type="text" name="isbn" required>
+    <input type="number" name="isbn" required>
 
     <label>Titolo:</label>
     <input type="text" name="titolo" required>
