@@ -9,38 +9,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cerca_prestiti'])) {
     $data_inizio = $_POST['data_inizio'];
     $data_fine = $_POST['data_fine'];
 
-    if ($data_inizio && $data_fine) {
-        // Query con intervallo date su data_uscita
-        $query = "
-            SELECT P.*, U.nome, U.cognome
-            FROM Biblioteca.Prestito P
-            JOIN Biblioteca.Utente U ON P.matricola = U.matricola
-            WHERE P.data_uscita BETWEEN '$data_inizio' AND '$data_fine'
-        ";
+    // Validazioni
+    if (($data_inizio && !$data_fine) || (!$data_inizio && $data_fine)) {
+        $message = "Se si inserisce una data, entrambe le date devono essere compilate.";
+    } elseif ($data_inizio && $data_fine && $data_fine < $data_inizio) {
+        $message = "La data di fine deve essere uguale o successiva alla data di inizio.";
     } else {
-        // Query default: data_restituzione_prevista > oggi
-        $query = "
-            SELECT P.*, U.nome, U.cognome
-            FROM Biblioteca.Prestito P
-            JOIN Biblioteca.Utente U ON P.matricola = U.matricola
-            WHERE P.data_restituzione_prevista > CURRENT_DATE
-            ORDER BY P.data_restituzione_prevista
-        ";
-    }
-
-    $result = mysqli_query($link, $query);
-
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $results = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if ($data_inizio && $data_fine) {
+            // Query con intervallo date su data_uscita
+            $query = "
+                SELECT P.*, U.nome, U.cognome
+                FROM Biblioteca.Prestito P
+                JOIN Biblioteca.Utente U ON P.matricola = U.matricola
+                WHERE P.data_uscita BETWEEN '$data_inizio' AND '$data_fine'
+            ";
         } else {
-            $message = "Nessun prestito trovato con i criteri specificati.";
+            // Query default: data_restituzione_prevista > oggi
+            $query = "
+                SELECT P.*, U.nome, U.cognome
+                FROM Biblioteca.Prestito P
+                JOIN Biblioteca.Utente U ON P.matricola = U.matricola
+                WHERE P.data_restituzione_prevista > CURRENT_DATE
+                ORDER BY P.data_restituzione_prevista
+            ";
         }
-    } else {
-        $message = "Errore nella query: " . mysqli_error($link);
+
+        $result = mysqli_query($link, $query);
+
+        if ($result) {
+            if (mysqli_num_rows($result) > 0) {
+                $results = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            } else {
+                $message = "Nessun prestito trovato con i criteri specificati.";
+            }
+        } else {
+            $message = "Errore nella query: " . mysqli_error($link);
+        }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
