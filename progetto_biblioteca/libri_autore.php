@@ -37,8 +37,8 @@ if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
     <title>Libri per Autore</title>
     <style>
         body { font-family: Arial; padding: 20px; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; }
+        form input { margin-bottom: 10px; padding: 8px; width: 300px; }
+        label { font-weight: bold; margin-top: 10px; display: block; }
         button {
             background-color: #28a745;
             color: white;
@@ -63,6 +63,23 @@ if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
             border: 1px solid #f5c6cb;
             color: #721c24;
             width: fit-content;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
         }
     </style>
 </head>
