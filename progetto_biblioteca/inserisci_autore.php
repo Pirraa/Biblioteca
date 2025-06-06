@@ -41,37 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Nuovo Autore</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 <h2>Inserisci un Nuovo Autore</h2>
 
-<h2>Inserisci un Nuovo Autore</h2>
-
 <?php if (!empty($errore)): ?>
-    <div style="color: red; margin-bottom: 10px;">
+    <div class="message">
         <?php echo htmlspecialchars($errore); ?>
     </div>
 <?php endif; ?>

@@ -9,8 +9,8 @@ $error = "";
 
 // Gestione form
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['data_inizio'], $_GET['data_fine'])) {
-    $data_inizio = mysqli_real_escape_string($link, $_GET['data_inizio']);
-    $data_fine = mysqli_real_escape_string($link, $_GET['data_fine']);
+    $data_inizio =  $_GET['data_inizio'];
+    $data_fine =  $_GET['data_fine'];
 
     if (!empty($data_inizio) && !empty($data_fine)) {
         $query = "
@@ -34,36 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['data_inizio'], $_GET['da
 <html>
 <head>
     <title>Statistiche Prestiti per Succursale</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #28a745;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
@@ -81,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['data_inizio'], $_GET['da
 
 <?php
 if (!empty($error)) {
-    echo "<p class='error'>$error</p>";
+    echo "<p class='message'>$error</p>";
 }
 
 if ($result && mysqli_num_rows($result) > 0) {

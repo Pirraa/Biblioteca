@@ -7,69 +7,23 @@ include("strumenti/navbar.php");         // Navbar
 <html>
 <head>
     <title>Storico Utente</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .exit-btn {
-            background-color: #6c757d;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #5a6268;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 <h2>Ricerca Storico Prestiti per Matricola</h2>
 
-
-
 <form method="POST" action="">
     <label for="matricola">Matricola:</label>
     <input type="text" name="matricola" id="matricola" required>
     <button type="submit">Cerca</button>
-    <a href="index.php">
-    <button style="padding: 8px 16px; font-size: 14px; background-color: #dc3545; color: white; border: none; cursor: pointer;">
+    <button class="exit-btn" onclick="window.location.href='utenti.php'">
         Esci
     </button>
-</a>
 </form>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['matricola'])) {
     $matricola = $_POST['matricola'];
 
     // Query per ottenere lo storico dei prestiti
@@ -83,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = mysqli_query($link, $sql);
 
     if (!$query) {
-        echo "<p>Si è verificato un errore: " . mysqli_error($link) . "</p>";
+        echo "<p class='message'>Si è verificato un errore: " . mysqli_error($link) . "</p>";
         exit;
     }
 
@@ -105,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         echo "</table>";
     } else {
-        echo "<p>Nessun prestito trovato per questa matricola.</p>";
+        echo '<p class="message">Nessun prestito trovato per questa matricola.</p>';
     }
 
     mysqli_close($link);
