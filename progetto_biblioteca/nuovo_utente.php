@@ -6,27 +6,27 @@ $errore = ""; // Variabile per messaggi d'errore
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Leggo i dati inviati dal form
-    $matricola = trim($_POST["matricola"]);
-    $nome = trim($_POST["nome"]);
-    $cognome = trim($_POST["cognome"]);
-    $indirizzo = trim($_POST["indirizzo"]);
-    $telefono = trim($_POST["telefono"]);
+    $matricola = $_POST["matricola"];
+    $nome = $_POST["nome"];
+    $cognome = $_POST["cognome"];
+    $indirizzo = $_POST["indirizzo"];
+    $telefono = $_POST["telefono"];
 
     // Controllo se la matricola è già presente
-    $check_sql = "SELECT matricola FROM Utente WHERE matricola = ?";
-    $stmt = mysqli_prepare($link, $check_sql);
-    mysqli_stmt_bind_param($stmt, "s", $matricola);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
+    $check_sql = "SELECT matricola FROM Utente WHERE matricola = '$matricola'";
+    $query= mysqli_query($link, $check_sql);
 
-    if (mysqli_stmt_num_rows($stmt) > 0) {
+    if (!$query) {
+        $errore =  "Si è verificato un errore: " . mysqli_error($link);
+        exit;
+    }
+
+    if (mysqli_num_rows($query) > 0) {
         $errore = "Matricola già presente. Inserisci un valore univoco.";
     } else {
-        // Inserisco il nuovo utente
-        $insert_sql = "INSERT INTO Utente (matricola, nome, cognome, indirizzo, telefono) VALUES (?, ?, ?, ?, ?)";
-        $stmt_insert = mysqli_prepare($link, $insert_sql);
-        mysqli_stmt_bind_param($stmt_insert, "sssss", $matricola, $nome, $cognome, $indirizzo, $telefono);
-        $eseguito = mysqli_stmt_execute($stmt_insert);
+        // Inserisco il nuovo utente senza prepared statement
+        $insert_sql = "INSERT INTO Utente (matricola, nome, cognome, indirizzo, telefono) VALUES ('$matricola', '$nome', '$cognome', '$indirizzo', '$telefono')";
+        $eseguito = mysqli_query($link, $insert_sql);
 
         if (!$eseguito) {
             $errore = "Errore durante l'inserimento: " . mysqli_error($link);
@@ -46,32 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Nuovo Utente</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <?php if (!empty($errore)): ?>
-    <div style="color: red; font-weight: bold; margin-bottom: 20px;">
+    <div class="message">
         <?php echo $errore; ?>
     </div>
 <?php endif; ?>
@@ -82,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <form method="POST" action="">
     <label>Matricola:</label>
-    <input type="number" name="matricola" required>
+    <input type="text" name="matricola" required>
 
     <label>Nome:</label>
     <input type="text" name="nome" required>

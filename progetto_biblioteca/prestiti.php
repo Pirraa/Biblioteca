@@ -8,44 +8,7 @@ include("strumenti/navbar.php");         // Navbar
 <html>
 <head>
     <title>Elenco Prestiti</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-       button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        a{
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

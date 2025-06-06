@@ -7,7 +7,7 @@ $query = "SELECT * FROM Libro"; // Default query
 
 // Se è stato inviato un titolo tramite GET
 if (isset($_GET["titolo"]) && !empty(trim($_GET["titolo"]))) {
-    $titolo = mysqli_real_escape_string($link, $_GET["titolo"]);
+    $titolo =  $_GET["titolo"];
     $query = "SELECT * FROM Libro WHERE titolo LIKE '%$titolo%'";
 }
 
@@ -23,52 +23,7 @@ if (!$result) {
 <html>
 <head>
     <title>Ricerca Libro</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        input[type="text"] {
-            padding: 8px;
-            width: 300px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #28a745;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-         .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

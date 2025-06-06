@@ -1,5 +1,0 @@
-Controllo su prestiti_per_data: controllo che se inserisco una data devo inserire anche l'altra
-Mettere le pagine sulle apposite cartelle 
-togliere tutte le funzioni  mysqli_real_escape_string()
-mettere unico file css e importarlo
-mettere una multiselect per gli autori quando inserisco un libro e fare quindi la query di inserimento sia su libri sia su libri-autori

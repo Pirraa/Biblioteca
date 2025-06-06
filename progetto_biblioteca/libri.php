@@ -7,44 +7,7 @@ include("strumenti/navbar.php");       // Navbar
 <html>
 <head>
     <title>Elenco Libri</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        a{
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -64,14 +27,25 @@ include("strumenti/navbar.php");       // Navbar
 
 <?php
 // Query per ottenere tutti i libri
-$query = "SELECT titolo, ISBN, anno_pubblicazione, succursale, lingua FROM Biblioteca.Libro";
+//$query = "SELECT titolo, ISBN, anno_pubblicazione, succursale, lingua FROM Biblioteca.Libro";
+
+
+
+// Query per ottenere tutti i libri con i nomi degli autori
+//per avere una unica riga devo usare concat, altrimenti la posso togliere ma metto una colonna per nome e una per cognome e una riga per ogni autore
+$query = "SELECT l.titolo, l.ISBN, l.anno_pubblicazione, l.succursale, l.lingua, 
+                 GROUP_CONCAT(CONCAT(a.nome, ' ', a.cognome) SEPARATOR ', ') AS autori
+          FROM Biblioteca.Libro l
+          LEFT JOIN Biblioteca.AutoreLibro al ON l.id_libro = al.id_libro
+          LEFT JOIN Biblioteca.Autore a ON al.id_autore = a.id_autore
+          GROUP BY l.id_libro";
 
 $result = mysqli_query($link, $query);
 
 // Verifica se ci sono risultati
 if (mysqli_num_rows($result) > 0) {
     echo "<table>";
-    echo "<tr><th>Titolo</th><th>ISBN</th><th>Anno Pubblicazione</th><th>Succursale</th><th>Lingua</th></tr>";
+    echo "<tr><th>Titolo</th><th>ISBN</th><th>Anno Pubblicazione</th><th>Succursale</th><th>Lingua</th><th>Autori</th></tr>";
 
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
@@ -80,6 +54,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>" . htmlspecialchars($row["anno_pubblicazione"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["succursale"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["lingua"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["autori"]) . "</td>";
         echo "</tr>";
     }
 

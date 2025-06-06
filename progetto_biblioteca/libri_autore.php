@@ -6,12 +6,12 @@ $nome = "";
 $cognome = "";
 $result = null;
 
-// Se sono stati forniti nome e cognome dell'autore
+// veririco sia se sono stati inviati dal form tramite get sia se i campi non sono vuoti
 if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
     !empty(trim($_GET["nome"])) && !empty(trim($_GET["cognome"]))) {
 
-    $nome = mysqli_real_escape_string($link, $_GET["nome"]);
-    $cognome = mysqli_real_escape_string($link, $_GET["cognome"]);
+    $nome =  $_GET["nome"];
+    $cognome = $_GET["cognome"];
 
     $query = "
         SELECT A.nome, A.cognome, L.titolo, L.anno_pubblicazione
@@ -35,53 +35,7 @@ if (isset($_GET["nome"]) && isset($_GET["cognome"]) &&
 <html>
 <head>
     <title>Libri per Autore</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        form input { margin-bottom: 10px; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; display: block; }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-        table {
-            border-collapse: collapse;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 800px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f0f0f0;
-        }
-        tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 

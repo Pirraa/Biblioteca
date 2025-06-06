@@ -99,36 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['inserisci_prestito']))
 <html>
 <head>
     <title>Nuovo Prestito</title>
-    <style>
-         body { font-family: Arial; padding: 20px; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        label { font-weight: bold; margin-top: 10px; }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

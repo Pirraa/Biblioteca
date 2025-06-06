@@ -8,11 +8,14 @@ $totale_libri = null;
 
 // Primo blocco: conteggio libri per anno scelto dall'utente
 if (isset($_GET['anno']) && is_numeric($_GET['anno'])) {
-    $anno = mysqli_real_escape_string($link, $_GET['anno']);
+    $anno =  $_GET['anno'];
     $queryAnno = "SELECT COUNT(*) AS totale_libri FROM Libro WHERE anno_pubblicazione = $anno";
     $resultAnno = mysqli_query($link, $queryAnno);
 
+    //$resultAnno non contiene direttamente il numero, è un oggetto di tipo mysqli_result
     if ($resultAnno && mysqli_num_rows($resultAnno) > 0) {
+        //prendo il conteggio dei libri per l'anno selezionato, estraggo la colonna 'totale_libri'
+        //row è un array associativo, devo estrarre il valore della chiave 'totale_libri'
         $row = mysqli_fetch_assoc($resultAnno);
         $totale_libri = $row['totale_libri'];
     }
@@ -32,49 +35,7 @@ $resultAutori = mysqli_query($link, $queryAutori);
 <html>
 <head>
     <title>Statistiche Libri</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        input[type="number"] {
-            padding: 8px;
-            margin-bottom: 10px;
-            width: 120px;
-        }
-        button {
-            padding: 8px 16px;
-            margin-right: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        h3 {
-            margin-top: 40px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

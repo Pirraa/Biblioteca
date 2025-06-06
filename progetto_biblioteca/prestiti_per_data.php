@@ -54,49 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cerca_prestiti'])) {
 <html>
 <head>
     <title>Ricerca Prestiti</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        form input, form select { margin-bottom: 10px; display: block; padding: 8px; width: 300px; }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .exit-btn {
-            background-color: #dc3545;
-            margin-left: 10px;
-        }
-        .exit-btn:hover {
-            background-color: #b02a37;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #ddd;
-        }
-        .message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            width: fit-content;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
@@ -104,10 +62,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cerca_prestiti'])) {
 
 <form method="post" action="">
     <label for="data_inizio">Data Inizio (opzionale):</label>
-    <input type="date" id="data_inizio" name="data_inizio" value="<?php echo isset($_POST['data_inizio']) ? htmlspecialchars($_POST['data_inizio']) : ''; ?>">
+    <?php
+    if (isset($_POST['data_inizio'])) {
+        $valore_data_inizio = htmlspecialchars($_POST['data_inizio']);
+    } else {
+        $valore_data_inizio = '';
+    }
+    ?>
+    <input type="date" id="data_inizio" name="data_inizio" value="<?php echo $valore_data_inizio; ?>">
 
     <label for="data_fine">Data Fine (opzionale):</label>
-    <input type="date" id="data_fine"  name="data_fine" value="<?php echo isset($_POST['data_fine']) ? htmlspecialchars($_POST['data_fine']) : ''; ?>">
+    <?php
+    if (isset($_POST['data_fine'])) {
+        $valore_data_fine = htmlspecialchars($_POST['data_fine']);
+    } else {
+        $valore_data_fine = '';
+    }
+    ?>
+    <input type="date" id="data_fine" name="data_fine" value="<?php echo $valore_data_fine; ?>">
 
     <button type="submit" name="cerca_prestiti">Cerca</button>
     <button type="button" class="exit-btn" onclick="window.location.href='prestiti.php'">Esci</button>
