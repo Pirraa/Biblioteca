@@ -1,0 +1,92 @@
+body { font-family: Arial; padding: 20px; }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    /*max-width: 800px;*/
+}
+
+th, td {
+    border: 1px solid #aaa;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #ddd;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.exit-btn {
+    background-color: #dc3545;
+    margin-left: 10px;
+}
+
+.exit-btn:hover {
+    background-color: #b02a37;
+}
+
+.button-green {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.button-green:hover {
+    background-color: #218838;
+}
+
+a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    width: fit-content;
+}
+
+label { 
+    display: block; 
+    margin-top: 10px; 
+    font-weight: bold; 
+}
+
+form input, form select { 
+    margin-bottom: 10px; 
+    display: block; 
+    padding: 8px; 
+    width: 300px; 
+}
+
+input[type="number"] {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin-top: 40px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    margin-bottom: 10px;
+}
